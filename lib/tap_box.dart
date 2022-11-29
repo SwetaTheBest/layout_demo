@@ -14,14 +14,36 @@ class TapBox extends StatefulWidget {
 }
 
 class _TapBoxState extends State<TapBox> {
-  void _handelTap() {
+  bool _highlight = false;
+
+  void _handleTap() {
     widget.onChanged(!widget.active);
+  }
+
+  void _handleTapDown(TapDownDetails tapDownDetails) {
+    setState(() {
+      _highlight = true;
+    });
+  }
+
+  void _handleTapUp(TapUpDetails tapUpDetails) {
+    setState(() {
+      _highlight = false;
+    });
+  }
+  void _handleTapCancel() {
+    setState(() {
+      _highlight = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _handelTap,
+      onTapDown: _handleTapDown,
+      onTapUp: _handleTapUp,
+      onTap: _handleTap,
+      onTapCancel: _handleTapCancel,
       child: Container(
         width: 50.0,
         height: 50.0,
